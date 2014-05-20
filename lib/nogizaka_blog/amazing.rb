@@ -4,12 +4,14 @@ require 'net/http'
 
 module NogizakaBlog
   class Amazing
-    include Member
-    using NogizakaBlogExtentions
+    using Extentions
 
     def initialize(yearmonth)
       @yearmonth = yearmonth
+      @member_size = MEMBER.size
     end
+
+    attr_reader :member_size
 
     def scraping
       get_max_page
@@ -35,7 +37,7 @@ module NogizakaBlog
           article = @comment.length
         end
 
-        yield MEMBER[name], @comment.sum, article, idx
+        yield name, @comment.sum, article, idx
       end
     end
 
@@ -47,18 +49,18 @@ module NogizakaBlog
       puts header
       puts '-' * header.size
       scraping do |name, comment, article, _|
-        puts display_format(name, comment, article)
+        puts display_format("#{name.to_kanji}(#{name})", comment, article)
       end
     end
 
     def gen_json
-      last = MEMBER.size - 1
+      last = @member_size - 1
       print "["
       scraping do |name, comment, article, idx|
         if idx == last
-          print "{\"name\": \"#{name}\", \"comment\": #{comment}, \"article\": #{article}}"
+          print "{\"name\": \"#{name.to_kanji}\", \"comment\": #{comment}, \"article\": #{article}}"
         else
-          print "{\"name\": \"#{name}\", \"comment\": #{comment}, \"article\": #{article}},"
+          print "{\"name\": \"#{name.to_kanji}\", \"comment\": #{comment}, \"article\": #{article}},"
         end
       end
       print "]"
@@ -101,7 +103,7 @@ module NogizakaBlog
     end
 
     def display_format(name, comment, article)
-      name_length = 10 - full_width_count(name)
+      name_length = 28 - full_width_count(name)
       [name.ljust(name_length), comment.to_s.rjust(7), article.to_s.rjust(7)].join(' | ')
     end
 
