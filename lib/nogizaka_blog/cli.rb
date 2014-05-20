@@ -1,27 +1,25 @@
-require 'optparse'
+require 'thor'
 
 module NogizakaBlog
-  OptionParser.new do |opt|
-    opt.banner = "Usage: ruby nogizaka_blog.rb -m 201404"
-
-    opt.on('-m [yearmonth]', "specify the month you want to get. ex. 201404") do |yearmonth|
-      @yearmonth = yearmonth
-      unless ARGV.include?("-j")
-        nogizaka = NogizakaBlog::Amazing.new(@yearmonth)
+  class CLI < Thor
+    desc "yearmonth YEARMONTH", "show the number of comments and articles of Nogizaka46's blog"
+    option :json, :type => :boolean, :aliases => '-j'
+    def yearmonth(ym)
+      nogizaka = NogizakaBlog::Amazing.new(ym)
+      if options[:json]
+        nogizaka.__send__ :gen_json
+      else
         nogizaka.__send__ :run
       end
     end
+    map %w(-ym --yearmonth) => :yearmonth
 
-    opt.on('-j', 'JSON format') do
-      nogizaka = NogizakaBlog::Amazing.new(@yearmonth)
-      nogizaka.__send__ :gen_json
-    end
-
-    opt.on_tail('-v', '--version', 'Show version') do
+    desc "version", "show NogizakaBlog version"
+    def version
       puts "NogizakaBlog #{NogizakaBlog::VERSION}"
-      exit
     end
-
-    opt.parse!(ARGV)
+    map %w(-v --version) => :version
   end
+
+  CLI.start(ARGV)
 end
