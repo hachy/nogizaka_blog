@@ -18,7 +18,11 @@ Or install it yourself as:
 
 ## Usage
 
-	$ ruby nogizaka_blog -m 201405
+	$ nogizaka_blog yearmonth 201405
+
+Generate JSON
+
+	$ nogizaka_blog yearmonth 201405 --json
 
 ## Contributing
 
