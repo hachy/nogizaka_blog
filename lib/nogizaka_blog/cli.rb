@@ -12,7 +12,7 @@ module NogizakaBlog
         nogizaka.__send__ :run
       end
     end
-    map %w(-ym --yearmonth) => :yearmonth
+    map %w(-y --yearmonth) => :yearmonth
 
     desc "version", "show NogizakaBlog version"
     def version
