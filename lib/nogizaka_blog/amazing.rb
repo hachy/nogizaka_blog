@@ -6,15 +6,15 @@ module NogizakaBlog
   class Amazing
     using Extentions
 
+    attr_reader :member_size
+
     def initialize(yearmonth)
       @yearmonth = yearmonth
       @member_size = MEMBER.size
     end
 
-    attr_reader :member_size
-
     def scraping
-      get_max_page
+      max_page
       @member_max.each_with_index do |(name, max), idx|
         @comment = []
 
@@ -23,11 +23,11 @@ module NogizakaBlog
           @comment << 0
         elsif max == 0
           url = "http://blog.nogizaka46.com/#{name}/?d=#{@yearmonth}"
-          get_comment_size(url)
+          comment_size(url)
         else
           (1..max).each do |n|
             url = "http://blog.nogizaka46.com/#{name}/?p=#{n}&d=#{@yearmonth}"
-            get_comment_size(url)
+            comment_size(url)
           end
         end
 
@@ -55,18 +55,18 @@ module NogizakaBlog
 
     def gen_json
       last = @member_size - 1
-      print "["
+      print '['
       scraping do |name, comment, article, idx|
         if idx == last
-          print "{\"name\": \"#{name.to_kanji}\", \"comment\": #{comment}, \"article\": #{article}}"
+          print %Q({"name": "#{name.to_kanji}", "comment": #{comment}, "article": #{article}})
         else
-          print "{\"name\": \"#{name.to_kanji}\", \"comment\": #{comment}, \"article\": #{article}},"
+          print %Q({"name": "#{name.to_kanji}", "comment": #{comment}, "article": #{article}},)
         end
       end
-      print "]"
+      print ']'
     end
 
-    def get_max_page
+    def max_page
       nbsp = Nokogiri::HTML('&nbsp;').text
       @member_max = []
 
@@ -95,7 +95,7 @@ module NogizakaBlog
       end
     end
 
-    def get_comment_size(url)
+    def comment_size(url)
       doc = Nokogiri::HTML(open(url))
       doc.css('.entrybottom a:last').each do |link|
         link.content.scan(/\d+/) { |c| @comment << c }
