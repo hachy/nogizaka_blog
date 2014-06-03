@@ -18,11 +18,36 @@ Or install it yourself as:
 
 ## Usage
 
-	$ nogizaka_blog yearmonth 201405
+	require 'nogizaka_blog'
+	
+	nogi = NogizakaBlog::Amazing.new('201405')
+	
+	nogi.scraping do |name, comment, article, index|
+	  puts "#{index} #{name.to_kanji}(#{name}) #{comment} / #{article}"
+	end
 
-Generate JSON
+Generate JSON example
 
-	$ nogizaka_blog yearmonth 201405 --json
+	require 'nogizaka_blog'
+	
+	@nogi = NogizakaBlog::Amazing.new('201405')
+	
+	p @nogi.member_size
+	
+	def gen_json
+	  last = @nogi.member_size - 1
+	  print '['
+	  @nogi.scraping do |name, comment, article, idx|
+	    if idx == last
+	      print %Q({"name": "#{name.to_kanji}", "comment": #{comment}, "article": #{article}})
+	    else
+	      print %Q({"name": "#{name.to_kanji}", "comment": #{comment}, "article": #{article}},)
+	    end
+	  end
+	  print ']'
+	end
+	
+	gen_json
 
 ## Contributing
 
