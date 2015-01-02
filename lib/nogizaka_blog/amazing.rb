@@ -78,6 +78,8 @@ module NogizakaBlog
       doc.css('.entrybottom a:last').each do |link|
         link.content.scan(/\d+/) { |c| @comment << c }
       end
+    rescue => e
+      puts "\e[31mSome failure: #{e}\e[0m"
     end
   end
 end
