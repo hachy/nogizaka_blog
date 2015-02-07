@@ -4,7 +4,7 @@ module NogizakaBlog
     'erika.ikuta' => '生田絵梨花',
     'rina.ikoma' => '生駒里奈',
     'karin.itou' => '伊藤かりん',
-    'junna.itou' => '伊藤 純奈',
+    'junna.itou' => '伊藤純奈',
     'marika.ito' => '伊藤万理華',
     'sayuri.inoue' => '井上小百合',
     'misa.eto' => '衛藤美彩',
