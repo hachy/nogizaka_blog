@@ -28,7 +28,6 @@ module NogizakaBlog
     'nanase.nishino' => '西野七瀬',
     'ami.noujo' => '能條愛未',
     'nanami.hashimoto' => '橋本奈々未',
-    'seira.hatanaka' => '畠中清羅',
     'hina.higuchi' => '樋口日奈',
     'mai.fukagawa' => '深川麻衣',
     'minami.hoshino' => '星野みなみ',
