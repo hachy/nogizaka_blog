@@ -4,7 +4,7 @@ require 'net/http'
 
 module NogizakaBlog
   class Amazing
-    using Extentions
+    using Extensions if RUBY_VERSION >= '2.1.0'
 
     attr_reader :member_size
     attr_accessor :yearmonth
