@@ -4,12 +4,20 @@ class String
   end
 end
 
-module NogizakaBlog
-  module Extentions
-    refine Array do
-      def sum
-        map(&:to_i).inject(:+)
+if RUBY_VERSION >= '2.1.0'
+  module NogizakaBlog
+    module Extensions
+      refine Array do
+        def sum
+          map(&:to_i).inject(:+)
+        end
       end
+    end
+  end
+else
+  class Array
+    def sum
+      map(&:to_i).inject(:+)
     end
   end
 end
