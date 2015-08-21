@@ -4,6 +4,7 @@ require 'net/http'
 
 module NogizakaBlog
   class Amazing
+    include Enumerable
     using Extensions if RUBY_VERSION >= '2.1.0'
 
     attr_reader :member_size
@@ -14,9 +15,14 @@ module NogizakaBlog
       @member_size = MEMBER.size
     end
 
-    def scraping
+    def scraping(&block)
+      warn "\e[31m[DEPRECATION] `scraping` is deprecated.  Please use `each` instead.\e[0m"
+      each(&block)
+    end
+
+    def each
       max_page
-      @member_max.each_with_index do |(name, max), idx|
+      @member_max.each do |name, max|
         @comment = []
 
         # @comment = 0 when redirected
@@ -38,7 +44,7 @@ module NogizakaBlog
           article = @comment.length
         end
 
-        yield name, @comment.sum, article, idx
+        yield name, @comment.sum, article
       end
     end
 
