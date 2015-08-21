@@ -22,10 +22,10 @@ Or install it yourself as:
 require 'nogizaka_blog'
 
 
-nogi = NogizakaBlog::Amazing.new('201405')
+nogi = NogizakaBlog::Amazing.new('201508')
 
-nogi.scraping do |name, comment, article, index|
-  puts "#{index} #{name.to_kanji}(#{name}) #{comment} / #{article}"
+nogi.each do |name, comment, article|
+  puts "#{name.to_kanji}(#{name}) #{comment} / #{article}"
 end
 ```
 
@@ -34,14 +34,14 @@ Generate JSON example
 ```ruby
 require 'nogizaka_blog'
 
-@nogi = NogizakaBlog::Amazing.new('201405')
+@nogi = NogizakaBlog::Amazing.new('201508')
 
 p @nogi.member_size
 
 def gen_json
   last = @nogi.member_size - 1
   print '['
-  @nogi.scraping do |name, comment, article, idx|
+  @nogi.each_with_index do |(name, comment, article), idx|
     if idx == last
       print %Q({"name": "#{name.to_kanji}", "comment": #{comment}, "article": #{article}})
     else
