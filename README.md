@@ -54,6 +54,16 @@ end
 gen_json
 ```
 
+### CLI
+
+Basic usage in Terminal
+
+	$ nogizaka_blog when YEARMONTH [--sort comment/article]
+
+(e.g. September 2015)
+
+	$ nogizaka_blog when 201509
+
 ## Contributing
 
 1. Fork it ( https://github.com/[my-github-username]/nogizaka_blog/fork )
