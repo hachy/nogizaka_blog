@@ -31,13 +31,13 @@ module NogizakaBlog
     end
 
     def sort_by_comment
-      @nogi.sort { |a, b| b[1] <=> a[1] }.each do |name, comment, article|
+      @nogi.sort_by { |_, b, _| b }.reverse_each do |name, comment, article|
         puts display_format("#{name.to_kanji}", comment, article)
       end
     end
 
     def sort_by_article
-      @nogi.sort { |a, b| b[2] <=> a[2] }.each do |name, comment, article|
+      @nogi.sort_by { |_, _, c| c }.reverse_each do |name, comment, article|
         puts display_format("#{name.to_kanji}", comment, article)
       end
     end
