@@ -1,5 +1,7 @@
 # NogizakaBlog
 
+[![Build Status](https://travis-ci.org/hachy/nogizaka_blog.svg?branch=master)](https://travis-ci.org/hachy/nogizaka_blog)
+
 Get the number of comments and articles per month from Nogizaka46's blog
 
 ## Installation
@@ -63,6 +65,8 @@ Basic usage in Terminal
 (e.g. September 2015)
 
 	$ nogizaka_blog when 201509
+
+[![asciicast](https://asciinema.org/a/26833.png)](https://asciinema.org/a/26833)
 
 ## Contributing
 
