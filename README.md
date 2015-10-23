@@ -66,11 +66,11 @@ Basic usage in Terminal
 
 	$ nogizaka_blog when 201509
 
-[![asciicast](https://asciinema.org/a/26833.png)](https://asciinema.org/a/26833)
+![screenshots](https://dl.dropboxusercontent.com/u/60760023/screenshots/nogizaka_blog.gif)
 
 ## Contributing
 
-1. Fork it ( https://github.com/[my-github-username]/nogizaka_blog/fork )
+1. Fork it ( https://github.com/hachy/nogizaka_blog/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
