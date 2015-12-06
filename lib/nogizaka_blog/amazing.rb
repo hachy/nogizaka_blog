@@ -21,8 +21,8 @@ module NogizakaBlog
     end
 
     def each
-      max_page
-      @member_max.each do |name, max|
+      MEMBER.keys.each do |name|
+        max = max_page(name)
         @comment = []
 
         # @comment = 0 when redirected
@@ -50,33 +50,30 @@ module NogizakaBlog
 
     private
 
-    def max_page
+    def max_page(name)
       nbsp = Nokogiri::HTML('&nbsp;').text
-      @member_max = []
 
-      MEMBER.keys.each do |name|
-        url = "http://blog.nogizaka46.com/#{name}/?d=#{@yearmonth}"
-        response = Net::HTTP.get_response(URI.parse(url))
+      url = "http://blog.nogizaka46.com/#{name}/?d=#{@yearmonth}"
+      response = Net::HTTP.get_response(URI.parse(url))
 
-        # Be redirected if it doesn't exist @yearmonth.
-        case response
-        when Net::HTTPSuccess
-          doc = Nokogiri::HTML(open(url))
-          paginate_class = doc.css('.paginate:first a:nth-last-child(2)')
-          if paginate_class.empty?
-            num = 0
-          else
-            paginate_class.each do |link|
-              num = link.content
-            end
-            num.gsub!(nbsp, '')
+      # Be redirected if it doesn't exist @yearmonth.
+      case response
+      when Net::HTTPSuccess
+        doc = Nokogiri::HTML(open(url))
+        paginate_class = doc.css('.paginate:first a:nth-last-child(2)')
+        if paginate_class.empty?
+          num = 0
+        else
+          paginate_class.each do |link|
+            num = link.content
           end
-        when Net::HTTPRedirection
-          num = -1
+          num.gsub!(nbsp, '')
         end
-
-        @member_max << [name, num.to_i]
+      when Net::HTTPRedirection
+        num = -1
       end
+
+      num.to_i
     end
 
     def comment_size(url)
