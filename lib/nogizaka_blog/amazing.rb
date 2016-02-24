@@ -77,7 +77,7 @@ module NogizakaBlog
     end
 
     def comment_size(url)
-      doc = Nokogiri::HTML(open(url))
+      doc = Nokogiri::HTML(open(url, 'User-Agent' => 'firefox'))
       doc.css('.entrybottom a:last').each do |link|
         link.content.scan(/\d+/) { |c| @comment << c }
       end
