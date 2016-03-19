@@ -1,6 +1,6 @@
 require 'nokogiri'
 require 'open-uri'
-require 'net/http'
+require 'typhoeus'
 
 module NogizakaBlog
   class Amazing
@@ -54,12 +54,12 @@ module NogizakaBlog
       nbsp = Nokogiri::HTML('&nbsp;').text
 
       url = "http://blog.nogizaka46.com/#{name}/?d=#{@yearmonth}"
-      response = Net::HTTP.get_response(URI.parse(url))
+      response = Typhoeus.get(url).code
 
       # Be redirected if it doesn't exist @yearmonth.
       case response
-      when Net::HTTPSuccess
-        doc = Nokogiri::HTML(open(url))
+      when 200
+        doc = Nokogiri::HTML(open(url, 'User-Agent' => 'firefox'))
         paginate_class = doc.css('.paginate:first a:nth-last-child(2)')
         if paginate_class.empty?
           num = 0
@@ -69,7 +69,7 @@ module NogizakaBlog
           end
           num.gsub!(nbsp, '')
         end
-      when Net::HTTPRedirection
+      when 302
         num = -1
       end
 
