@@ -24,7 +24,6 @@ module NogizakaBlog
     'ranze.terada' => '寺田蘭世',
     'kana.nakada' => '中田花奈',
     'himeka.nakamoto' => '中元日芽香',
-    'seira.nagashima' => '永島聖羅',
     'nanase.nishino' => '西野七瀬',
     'ami.noujo' => '能條愛未',
     'nanami.hashimoto' => '橋本奈々未',
@@ -36,6 +35,6 @@ module NogizakaBlog
     'rena.yamazaki' => '山崎怜奈',
     'yumi.wakatsuki' => '若月佑美',
     'miria.watanabe' => '渡辺みり愛',
-    'maaya.wada' => '和田まあや'
+    'maaya.wada' => '和田まあや',
   }.freeze
 end
