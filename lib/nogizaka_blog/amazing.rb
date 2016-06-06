@@ -1,6 +1,5 @@
 require 'nokogiri'
 require 'open-uri'
-require 'typhoeus'
 
 module NogizakaBlog
   class Amazing
@@ -52,25 +51,23 @@ module NogizakaBlog
 
     def max_page(name)
       nbsp = Nokogiri::HTML('&nbsp;').text
-
       url = "http://blog.nogizaka46.com/#{name}/?d=#{@yearmonth}"
-      response = Typhoeus.get(url).code
+      doc = Nokogiri::HTML(open(url, 'User-Agent' => 'firefox'))
+      paginate_class = doc.css('.paginate:first a:nth-last-child(2)')
+      paginate_class_last = doc.css('.paginate:first a:nth-last-child(1)')
 
-      # Be redirected if it doesn't exist @yearmonth.
-      case response
-      when 200
-        doc = Nokogiri::HTML(open(url, 'User-Agent' => 'firefox'))
-        paginate_class = doc.css('.paginate:first a:nth-last-child(2)')
-        if paginate_class.empty?
-          num = 0
+      if paginate_class.empty?
+        num = 0
+      else
+        # workaround
+        if paginate_class_last.attribute('href').to_s == '?p=2'
+          num = -1
         else
           paginate_class.each do |link|
             num = link.content
           end
           num.gsub!(nbsp, '')
         end
-      when 302
-        num = -1
       end
 
       num.to_i
